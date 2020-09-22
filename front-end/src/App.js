@@ -1,12 +1,24 @@
 import React, { useState, useCallback, useRef } from "react";
 import produce from "immer";
 
+import "../src/App.css";
+
 function App() {
   const numRows = 30;
   const numCols = 30;
-  const ranColorNum1 = Math.floor(Math.random() * Math.floor(255));
 
-  const operations = [
+  // Set Generation Information
+  const [generation, setGeneration] = useState(0);
+  const genRef = useRef();
+  genRef.current = generation;
+
+  // Simulation Running
+  const [running, setRunning] = useState(false);
+  const runningRef = useRef();
+  runningRef.current = running;
+
+  // Check if the coordinal neighbors
+  const cellNeighs = [
     [0, 1],
     [0, -1],
     [1, -1],
@@ -29,23 +41,17 @@ function App() {
     return generateEmptyGrid();
   });
 
-  const [running, setRunning] = useState(false);
-  const runningRef = useRef();
-  runningRef.current = running;
-
-  const [generation, setGeneration] = useState(0);
-
   const runSimulation = useCallback(() => {
     if (!runningRef.current) {
       return;
     }
-
+    setGeneration((genRef.current += 1));
     setGrid((g) => {
       return produce(g, (gridCopy) => {
         for (let i = 0; i < numRows; i++) {
           for (let k = 0; k < numCols; k++) {
             let neighbors = 0;
-            operations.forEach(([x, y]) => {
+            cellNeighs.forEach(([x, y]) => {
               const newI = i + x;
               const newK = k + y;
               if (newI >= 0 && newI < numRows && newK >= 0 && newK < numCols) {
@@ -59,14 +65,10 @@ function App() {
             }
           }
         }
-        // Where I thought would be respondsible for the generation counting.
-        if (gridCopy) {
-          setGeneration((prevState) => (prevState += 1));
-        }
       });
     });
 
-    setTimeout(runSimulation, 100);
+    setTimeout(runSimulation, 1000);
   }, []);
 
   return (
@@ -84,6 +86,7 @@ function App() {
             if (!running) {
               runningRef.current = true;
               runSimulation();
+              setGeneration(0);
             }
           }}
         >
@@ -92,6 +95,7 @@ function App() {
         <button
           onClick={() => {
             setGrid(generateEmptyGrid());
+            setGeneration(0);
           }}
         >
           Clear
@@ -110,10 +114,13 @@ function App() {
           Random
         </button>
       </div>
+      {/* OverAll Grid */}
       <div
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${numCols}, 20px)`,
+          justifyContent: "center",
+          margin: "25px 0px",
         }}
       >
         {/* Grid Boxes */}
@@ -130,6 +137,7 @@ function App() {
               style={{
                 width: 20,
                 height: 20,
+
                 background: grid[i][k] ? "blue" : undefined,
                 border: "solid 1px black",
               }}
