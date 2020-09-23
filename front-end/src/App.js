@@ -13,6 +13,9 @@ function App() {
   const [generation, setGeneration] = useState(0);
   const genRef = useRef();
   genRef.current = generation;
+  const ranColorNum1 = Math.floor(Math.random() * Math.floor(255));
+  const ranColorNum2 = Math.floor(Math.random() * Math.floor(255));
+  const ranColorNum3 = Math.floor(Math.random() * Math.floor(255));
 
   // Simulation Running
   const [running, setRunning] = useState(false);
@@ -97,46 +100,56 @@ function App() {
         }}
       >
         <h2 style={{ textAlign: "center" }}>Generation: {generation}</h2>
-        <input
-          placeholder="Enter speed (in Ms)"
-          // value={speed}
-          onChange={handleinputChange}
-        ></input>
-        {console.log(speed)}
 
-        <button
-          onClick={() => {
-            setRunning(!running);
-            if (!running) {
-              runningRef.current = true;
-              runSimulation();
+        {/* Button and Input Div */}
+        <div
+          style={{
+            margin: ".5rem",
+          }}
+        >
+          <input
+            placeholder="Enter speed (in Ms)"
+            // value={speed}
+            onChange={handleinputChange}
+          ></input>
+          {console.log(speed)}
+
+          <button
+            onClick={() => {
+              setRunning(!running);
+              if (!running) {
+                runningRef.current = true;
+                runSimulation();
+                setGeneration(0);
+              }
+            }}
+          >
+            {running ? "Stop" : "Start"}
+          </button>
+          <button
+            onClick={() => {
+              setGrid(generateEmptyGrid());
               setGeneration(0);
-            }
-          }}
-        >
-          {running ? "Stop" : "Start"}
-        </button>
-        <button
-          onClick={() => {
-            setGrid(generateEmptyGrid());
-            setGeneration(0);
-          }}
-        >
-          Clear
-        </button>
-        <button
-          onClick={() => {
-            const rows = [];
-            for (let i = 0; i < numRows; i++) {
-              rows.push(
-                Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
-              );
-            }
-            setGrid(rows);
-          }}
-        >
-          Random
-        </button>
+            }}
+          >
+            Clear
+          </button>
+          <button
+            onClick={() => {
+              const rows = [];
+              for (let i = 0; i < numRows; i++) {
+                rows.push(
+                  Array.from(Array(numCols), () =>
+                    Math.random() > 0.7 ? 1 : 0
+                  )
+                );
+              }
+              setGrid(rows);
+            }}
+          >
+            Random
+          </button>
+        </div>
       </div>
       {/* OverAll Grid */}
       <div
@@ -144,7 +157,7 @@ function App() {
           display: "grid",
           gridTemplateColumns: `repeat(${numCols}, 20px)`,
           justifyContent: "center",
-          margin: "15px 0px",
+          marginTop: "2rem",
         }}
       >
         {/* Grid Boxes */}
@@ -162,7 +175,9 @@ function App() {
                 width: 20,
                 height: 20,
 
-                background: grid[i][k] ? "blue" : undefined,
+                background: grid[i][k]
+                  ? `rgb(${ranColorNum1},${ranColorNum2},${ranColorNum3})`
+                  : undefined,
                 border: "solid 1px black",
               }}
             />
