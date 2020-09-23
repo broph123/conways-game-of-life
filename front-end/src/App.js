@@ -1,11 +1,13 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import produce from "immer";
+
+import Rules from "./components/Rules";
 
 import "../src/App.css";
 
 function App() {
-  const numRows = 30;
-  const numCols = 30;
+  const numRows = 25;
+  const numCols = 25;
 
   // Set Generation Information
   const [generation, setGeneration] = useState(0);
@@ -16,6 +18,10 @@ function App() {
   const [running, setRunning] = useState(false);
   const runningRef = useRef();
   runningRef.current = running;
+
+  //Speed Hook
+  const [speed, setSpeed] = useState("");
+  console.log(speed, "Right after Our Hook");
 
   // Check if the coordinal neighbors
   const cellNeighs = [
@@ -46,6 +52,7 @@ function App() {
       return;
     }
     setGeneration((genRef.current += 1));
+
     setGrid((g) => {
       return produce(g, (gridCopy) => {
         for (let i = 0; i < numRows; i++) {
@@ -67,19 +74,36 @@ function App() {
         }
       });
     });
-
-    setTimeout(runSimulation, 1000);
+    console.log(speed, "Before the SetTimeout");
+    // setTimeout(runSimulation, 50000);
+    console.log(speed, "After SetTimeOut");
   }, []);
+
+  useEffect(() => {
+    setTimeout(runSimulation, 2000);
+  });
+
+  const handleinputChange = (e) => {
+    setSpeed(e.target.value);
+  };
 
   return (
     <>
       <h1 style={{ textAlign: "center" }}>Conway's Game of Life</h1>
-      <h2 style={{ textAlign: "center" }}>Generation: {generation}</h2>
+      {/* <Rules></Rules> */}
       <div
         style={{
           textAlign: "center",
         }}
       >
+        <h2 style={{ textAlign: "center" }}>Generation: {generation}</h2>
+        <input
+          placeholder="Enter speed (in Ms)"
+          // value={speed}
+          onChange={handleinputChange}
+        ></input>
+        {console.log(speed)}
+
         <button
           onClick={() => {
             setRunning(!running);
@@ -120,7 +144,7 @@ function App() {
           display: "grid",
           gridTemplateColumns: `repeat(${numCols}, 20px)`,
           justifyContent: "center",
-          margin: "25px 0px",
+          margin: "15px 0px",
         }}
       >
         {/* Grid Boxes */}
