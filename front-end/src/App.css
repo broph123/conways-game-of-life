@@ -3,3 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+.gridContainer {
+  background-color: rgb(250, 105, 105);
+  padding-bottom: 20px;
+}

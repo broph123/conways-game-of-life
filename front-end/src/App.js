@@ -13,17 +13,19 @@ function App() {
   const [generation, setGeneration] = useState(0);
   const genRef = useRef();
   genRef.current = generation;
-  const ranColorNum1 = Math.floor(Math.random() * Math.floor(255));
-  const ranColorNum2 = Math.floor(Math.random() * Math.floor(255));
-  const ranColorNum3 = Math.floor(Math.random() * Math.floor(255));
 
   // Simulation Running
   const [running, setRunning] = useState(false);
   const runningRef = useRef();
   runningRef.current = running;
 
+  // Create the random RGB color values
+  const ranColorNum1 = Math.floor(Math.random() * Math.floor(255));
+  const ranColorNum2 = Math.floor(Math.random() * Math.floor(255));
+  const ranColorNum3 = Math.floor(Math.random() * Math.floor(255));
+
   //Speed Hook
-  const [speed, setSpeed] = useState("");
+  const [speed, setSpeed] = useState(1000);
   console.log(speed, "Right after Our Hook");
 
   // Check if the coordinal neighbors
@@ -78,28 +80,25 @@ function App() {
       });
     });
     console.log(speed, "Before the SetTimeout");
-    // setTimeout(runSimulation, 50000);
+    setTimeout(runSimulation, speed);
     console.log(speed, "After SetTimeOut");
-  }, []);
-
-  useEffect(() => {
-    setTimeout(runSimulation, 2000);
-  });
+  }, [speed]);
 
   const handleinputChange = (e) => {
+    // e.preventDefault();
     setSpeed(e.target.value);
   };
 
   return (
-    <>
+    <div className="gridContainer">
       <h1 style={{ textAlign: "center" }}>Conway's Game of Life</h1>
       {/* <Rules></Rules> */}
       <div
-        style={{
-          textAlign: "center",
-        }}
+      // style={{
+      //   textAlign: "center",
+      // }}
       >
-        <h2 style={{ textAlign: "center" }}>Generation: {generation}</h2>
+        <h2>Generation: {generation}</h2>
 
         {/* Button and Input Div */}
         <div
@@ -107,13 +106,6 @@ function App() {
             margin: ".5rem",
           }}
         >
-          <input
-            placeholder="Enter speed (in Ms)"
-            // value={speed}
-            onChange={handleinputChange}
-          ></input>
-          {console.log(speed)}
-
           <button
             onClick={() => {
               setRunning(!running);
@@ -130,6 +122,7 @@ function App() {
             onClick={() => {
               setGrid(generateEmptyGrid());
               setGeneration(0);
+              setSpeed(1000);
             }}
           >
             Clear
@@ -149,6 +142,10 @@ function App() {
           >
             Random
           </button>
+          <input
+            placeholder={`Speed:${speed}`}
+            onChange={handleinputChange}
+          ></input>
         </div>
       </div>
       {/* OverAll Grid */}
@@ -156,7 +153,7 @@ function App() {
         style={{
           display: "grid",
           gridTemplateColumns: `repeat(${numCols}, 20px)`,
-          justifyContent: "center",
+          // justifyContent: "center",
           marginTop: "2rem",
         }}
       >
@@ -177,14 +174,14 @@ function App() {
 
                 background: grid[i][k]
                   ? `rgb(${ranColorNum1},${ranColorNum2},${ranColorNum3})`
-                  : undefined,
+                  : "rgb(245, 249, 250)",
                 border: "solid 1px black",
               }}
             />
           ))
         )}
       </div>
-    </>
+    </div>
   );
 }
 
