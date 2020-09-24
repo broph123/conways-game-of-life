@@ -2,8 +2,8 @@ import React from "react";
 
 const Rules = () => {
   return (
-    <div>
-      <h1>Rules for Conways Game of Life</h1>
+    <div className="RulesContainer">
+      <h2>Rules for Conways Game of Life</h2>
       <p>
         The universe of the Game of Life is an infinite, two-dimensional
         orthogonal grid of square cells, each of which is in one of two possible

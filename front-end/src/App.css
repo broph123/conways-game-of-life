@@ -4,6 +4,16 @@
   box-sizing: border-box;
 }
 .gridContainer {
-  background-color: rgb(250, 105, 105);
+  /* background-color: rgb(250, 105, 105); */
   padding-bottom: 20px;
+}
+.RulesContainer {
+  width: 50%;
+}
+.MainContainer {
+  display: flex;
+  flex-direction: row;
+}
+li {
+  list-style-position: inside;
 }

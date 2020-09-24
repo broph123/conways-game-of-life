@@ -79,109 +79,115 @@ function App() {
         }
       });
     });
-    console.log(speed, "Before the SetTimeout");
+
     setTimeout(runSimulation, speed);
-    console.log(speed, "After SetTimeOut");
   }, [speed]);
 
   const handleinputChange = (e) => {
-    // e.preventDefault();
     setSpeed(e.target.value);
   };
 
   return (
-    <div className="gridContainer">
-      <h1 style={{ textAlign: "center" }}>Conway's Game of Life</h1>
-      {/* <Rules></Rules> */}
-      <div
-      // style={{
-      //   textAlign: "center",
-      // }}
-      >
-        <h2>Generation: {generation}</h2>
+    <>
+      <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+        Conway's Game of Life
+      </h1>
+      <div className="MainContainer">
+        <div className="gridContainer">
+          <div
+            className="GenAndButtons"
+            style={{
+              margin: "0.5rem",
+              padding: "0rem 10rem",
+            }}
+          >
+            <h3>Generation: {generation}</h3>
 
-        {/* Button and Input Div */}
-        <div
-          style={{
-            margin: ".5rem",
-          }}
-        >
-          <button
-            onClick={() => {
-              setRunning(!running);
-              if (!running) {
-                runningRef.current = true;
-                runSimulation();
-                setGeneration(0);
-              }
-            }}
-          >
-            {running ? "Stop" : "Start"}
-          </button>
-          <button
-            onClick={() => {
-              setGrid(generateEmptyGrid());
-              setGeneration(0);
-              setSpeed(1000);
-            }}
-          >
-            Clear
-          </button>
-          <button
-            onClick={() => {
-              const rows = [];
-              for (let i = 0; i < numRows; i++) {
-                rows.push(
-                  Array.from(Array(numCols), () =>
-                    Math.random() > 0.7 ? 1 : 0
-                  )
-                );
-              }
-              setGrid(rows);
-            }}
-          >
-            Random
-          </button>
-          <input
-            placeholder={`Speed:${speed}`}
-            onChange={handleinputChange}
-          ></input>
-        </div>
-      </div>
-      {/* OverAll Grid */}
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: `repeat(${numCols}, 20px)`,
-          // justifyContent: "center",
-          marginTop: "2rem",
-        }}
-      >
-        {/* Grid Boxes */}
-        {grid.map((row, i) =>
-          row.map((col, k) => (
-            <div
-              key={`${i}-${k}`}
+            <button
               onClick={() => {
-                const newGrid = produce(grid, (gridCopy) => {
-                  gridCopy[i][k] = grid[i][k] ? 0 : 1;
-                });
-                setGrid(newGrid);
+                setRunning(!running);
+                if (!running) {
+                  runningRef.current = true;
+                  runSimulation();
+                  setGeneration(0);
+                }
               }}
-              style={{
-                width: 20,
-                height: 20,
+            >
+              {running ? "Stop" : "Start"}
+            </button>
+            <button
+              onClick={() => {
+                setGrid(generateEmptyGrid());
+                setGeneration(0);
+                setSpeed(1000);
+              }}
+            >
+              Clear
+            </button>
+            <button
+              onClick={() => {
+                const rows = [];
+                for (let i = 0; i < numRows; i++) {
+                  rows.push(
+                    Array.from(Array(numCols), () =>
+                      Math.random() > 0.7 ? 1 : 0
+                    )
+                  );
+                }
+                setGrid(rows);
+                setRunning(!running);
+                if (!running) {
+                  runningRef.current = true;
+                  runSimulation();
+                  setGeneration(0);
+                }
+              }}
+            >
+              Random
+            </button>
+            <input
+              placeholder={`Speed:${speed}`}
+              onChange={handleinputChange}
+            ></input>
+          </div>
 
-                background: grid[i][k]
-                  ? `rgb(${ranColorNum1},${ranColorNum2},${ranColorNum3})`
-                  : "rgb(245, 249, 250)",
-                border: "solid 1px black",
-              }}
-            />
-          ))
-        )}
+          <div
+            className="Grid"
+            style={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${numCols}, 20px)`,
+              // justifyContent: "center",
+              margin: "2rem 5.5rem",
+            }}
+          >
+            {/* Grid Boxes */}
+            {grid.map((row, i) =>
+              row.map((col, k) => (
+                <div
+                  key={`${i}-${k}`}
+                  onClick={() => {
+                    const newGrid = produce(grid, (gridCopy) => {
+                      gridCopy[i][k] = grid[i][k] ? 0 : 1;
+                    });
+                    setGrid(newGrid);
+                  }}
+                  style={{
+                    width: 20,
+                    height: 20,
+
+                    background: grid[i][k]
+                      ? `rgb(${ranColorNum1},${ranColorNum2},${ranColorNum3})`
+                      : "rgb(245, 249, 250)",
+                    border: "solid 1px black",
+                  }}
+                />
+              ))
+            )}
+          </div>
+        </div>
+        <Rules></Rules>
       </div>
-    </div>
+    </>
   );
 }
 
