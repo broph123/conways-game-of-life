@@ -26,8 +26,7 @@ const Rules = () => {
           overpopulation.
         </li>
         <li>
-          Any dead cell with exactly three live neighbours becomes a live cell,
-          as if by reproduction
+          Any dead cell with exactly three live neighbours becomes a live cell.
         </li>
       </ol>
     </div>

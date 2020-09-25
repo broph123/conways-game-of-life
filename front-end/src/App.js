@@ -89,7 +89,7 @@ function App() {
 
   return (
     <>
-      <h1 style={{ textAlign: "center", marginBottom: "1.5rem" }}>
+      <h1 style={{ textAlign: "center", marginBottom: ".75rem" }}>
         Conway's Game of Life
       </h1>
       <div className="MainContainer">
@@ -98,7 +98,6 @@ function App() {
             className="GenAndButtons"
             style={{
               margin: "0.5rem",
-              padding: "0rem 10rem",
             }}
           >
             <h3>Generation: {generation}</h3>
