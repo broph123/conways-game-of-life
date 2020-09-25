@@ -3,34 +3,49 @@
   padding: 0;
   box-sizing: border-box;
 }
+h1 {
+  padding-top: 1rem;
+  background-color: #4b3b47;
+  color: #e0d8de;
+}
 
 .MainContainer {
   display: flex;
   flex-direction: row;
+  background-color: #4b3b47;
 }
 
 .GenAndButtons {
   text-align: center;
 }
 h3 {
-  margin: 0.3rem 6.5rem;
+  padding: 0.3rem 5rem;
 }
 
 button {
   margin: 0 0.5rem;
   width: 15%;
+  border-radius: 0.5rem;
 }
 
 /* Rules Component */
-.RulesContainer {
-  width: 100%;
-  margin: 5rem 0 0 0;
 
-  align-items: center;
+.RulesContainer {
+  width: 95%;
+  margin: 10rem 5rem 0rem 0rem;
+  /* border: solid 3px #cfd2b2; */
 }
+h2 {
+  color: #e0d8de;
+}
+p {
+  color: #e0d8de;
+}
+
 li {
   list-style-position: inside;
   margin: 0.5rem 0 0 0;
   text-indent: 1rem;
   font-size: 0.75rem;
+  color: #e0d8de;
 }

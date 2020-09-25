@@ -89,9 +89,7 @@ function App() {
 
   return (
     <>
-      <h1 style={{ textAlign: "center", marginBottom: ".75rem" }}>
-        Conway's Game of Life
-      </h1>
+      <h1 style={{ textAlign: "center" }}>Conway's Game of Life</h1>
       <div className="MainContainer">
         <div className="gridContainer">
           <div
@@ -100,7 +98,7 @@ function App() {
               margin: "0.5rem",
             }}
           >
-            <h3>Generation: {generation}</h3>
+            <h3 style={{ color: "#E0D8DE" }}>Generation: {generation}</h3>
 
             <button
               onClick={() => {
@@ -184,7 +182,9 @@ function App() {
             )}
           </div>
         </div>
-        <Rules></Rules>
+        <div className="RulesCard">
+          <Rules></Rules>
+        </div>
       </div>
     </>
   );
