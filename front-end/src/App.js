@@ -183,7 +183,7 @@ function App() {
           </div>
         </div>
         <div className="RulesCard">
-          <Rules></Rules>
+          <Rules />
         </div>
       </div>
     </>
